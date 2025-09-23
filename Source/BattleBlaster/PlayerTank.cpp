@@ -55,7 +55,6 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void APlayerTank::MoveInput(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Value: %f"), Value.Get<float>());
 	float InValue = Value.Get<float>();
 
 	FVector DeltaLoc = FVector(Speed * InValue * UGameplayStatics::GetWorldDeltaSeconds(this)
@@ -65,7 +64,6 @@ void APlayerTank::MoveInput(const FInputActionValue& Value)
 }
 void APlayerTank::TurnInput(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Value: %f"), Value.Get<float>());
 	float InValue = Value.Get<float>();
 
 	FRotator DeltaRotation = FRotator(0.0f, 
