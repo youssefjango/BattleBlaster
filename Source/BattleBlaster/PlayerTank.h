@@ -4,23 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "BaseTank.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
 
-#include "InputMappingContext.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputAction.h"
+#include "InputActionValue.h"
+#include "EnhancedInputComponent.h"
+
+
 
 #include "PlayerTank.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class BATTLEBLASTER_API APlayerTank : public ABaseTank
 {
 	GENERATED_BODY()
 
-public: 
+public:
 	APlayerTank();
 
 protected:
@@ -35,12 +37,22 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputMappingContext* DefaultMappingInput;
+	class UInputMappingContext* DefaultMappingInput;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* MoveAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Motion")
+	float Speed = 300;
+	
 
 	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* SpringArm;
+	class USpringArmComponent* SpringArm;
+
 	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* CameraComp;
+	class UCameraComponent* CameraComp;
+
+
+	void MoveInput(const FInputActionValue& Value);
 
 };

@@ -1,16 +1,26 @@
 {
-	"FileVersion": 3,
-	"EngineAssociation": "5.6",
-	"Category": "",
-	"Description": "",
-	"Modules": [
-		{
-			"Name": "BattleBlaster",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine"
-			]
-		}
-	]
+  "FileVersion": 3,
+  "EngineAssociation": "5.6",
+  "Category": "",
+  "Description": "",
+  "Modules": [
+    {
+      "Name": "BattleBlaster",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "VisualStudioTools",
+      "Enabled": false,
+      "SupportedTargetPlatforms": [
+        "Win64"
+      ]
+    }
+  ],
+  "TargetPlatforms": [],
+  "AdditionalRootDirectories": [],
+  "AdditionalPluginDirectories": [],
+  "EpicSampleNameHash": ""
 }
