@@ -49,6 +49,7 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerTank::MoveInput);
+		EnhancedInputComponent->BindAction(TurnAction, ETriggerEvent::Triggered, this, &APlayerTank::TurnInput);
 	}
 }
 
@@ -61,5 +62,15 @@ void APlayerTank::MoveInput(const FInputActionValue& Value)
 		, 0.0f, 0.0f);
 
 	AddActorLocalOffset(DeltaLoc);
+}
+void APlayerTank::TurnInput(const FInputActionValue& Value)
+{
+	UE_LOG(LogTemp, Display, TEXT("Value: %f"), Value.Get<float>());
+	float InValue = Value.Get<float>();
+
+	FRotator DeltaRotation = FRotator(0.0f, 
+		RotationRate * InValue * UGameplayStatics::GetWorldDeltaSeconds(this), 0.0f);
+
+	AddActorLocalRotation(DeltaRotation, true);
 }
 
