@@ -18,3 +18,16 @@ ABaseTank::ABaseTank()
 	TurretMesh->SetupAttachment(BaseMesh);
 }
 
+void ABaseTank::RotateTurret(FVector lookAtTarget)
+{
+	FVector VectorToTarget = lookAtTarget - TurretMesh->GetComponentLocation();
+	FRotator LookAtRotation = FRotator(0.0f, VectorToTarget.Rotation().Yaw, 0.0f);
+	FRotator InterpolatedRotation = FMath::RInterpTo(TurretMesh->GetComponentRotation()
+		,LookAtRotation
+		,GetWorld()->GetDeltaSeconds()
+		,TurretRotationSpeed
+		);
+	
+	TurretMesh->SetWorldRotation(InterpolatedRotation);
+}
+

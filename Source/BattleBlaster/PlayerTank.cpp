@@ -43,8 +43,8 @@ void APlayerTank::Tick(float DeltaTime)
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller)){
 		FHitResult HitResult;
 		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
-		
-		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 25.0f, 5, FColor::Green);
+
+		Super::RotateTurret(HitResult.ImpactPoint);
 	}
 }
 

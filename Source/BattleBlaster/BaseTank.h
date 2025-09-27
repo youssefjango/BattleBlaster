@@ -19,7 +19,8 @@ public:
 	// Sets default values for this pawn's properties
 	ABaseTank();
 
-
+	UPROPERTY(EditAnywhere, Category = "Turret Motion")
+	float TurretRotationSpeed = 10.0f;
 
 	UPROPERTY(VisibleAnywhere)
 	UCapsuleComponent* CapsuleComp;
@@ -29,4 +30,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* TurretMesh;
+
+	void RotateTurret(FVector lookAtTarget);
 };
