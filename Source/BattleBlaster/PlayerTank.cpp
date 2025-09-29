@@ -12,7 +12,7 @@ APlayerTank::APlayerTank()
 {
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-
+	
 	SpringArm->SetupAttachment(RootComponent);
 	CameraComp->SetupAttachment(SpringArm);
 }
@@ -56,6 +56,7 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerTank::MoveInput);
 		EnhancedInputComponent->BindAction(TurnAction, ETriggerEvent::Triggered, this, &APlayerTank::TurnInput);
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &ABaseTank::Fire);
 	}
 }
 

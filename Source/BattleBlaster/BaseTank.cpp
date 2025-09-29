@@ -16,6 +16,9 @@ ABaseTank::ABaseTank()
 
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretMesh"));;
 	TurretMesh->SetupAttachment(BaseMesh);
+
+	ProjectileStartingPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileStartingPoint"));;
+	ProjectileStartingPoint->SetupAttachment(TurretMesh);
 }
 
 void ABaseTank::RotateTurret(FVector lookAtTarget)
@@ -30,4 +33,10 @@ void ABaseTank::RotateTurret(FVector lookAtTarget)
 	
 	TurretMesh->SetWorldRotation(InterpolatedRotation);
 }
+
+void ABaseTank::Fire() {
+	FVector SpawnLoc = ProjectileStartingPoint->GetComponentLocation();
+	FRotator SpawnLoc = ProjectileStartingPoint->GetComponentRotation();
+}
+
 
