@@ -20,5 +20,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	ABaseTank* Tank;
+
+	UPROPERTY(EditAnywhere, Category = "Shooting")
+	float ShootingRange = 500.0f;
 	
 };
