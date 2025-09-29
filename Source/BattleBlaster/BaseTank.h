@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Projectile.h"
 
 
 #include "BaseTank.generated.h"
@@ -33,6 +34,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* ProjectileStartingPoint;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AProjectile> ProjectileClass;
 
 	void RotateTurret(FVector lookAtTarget);
 

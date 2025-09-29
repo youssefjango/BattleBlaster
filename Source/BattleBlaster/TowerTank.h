@@ -23,5 +23,10 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Shooting")
 	float ShootingRange = 500.0f;
-	
+	UPROPERTY(EditAnywhere, Category = "Shooting")
+	float FireRate = 2.0f;
+
+	void CheckFireCondition();
+private:
+	bool InFireRange();
 };
