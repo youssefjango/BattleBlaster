@@ -21,4 +21,7 @@ protected:
 public:
 	ABaseTank* Tank;
 	int32 TowerCount;
+
+	UFUNCTION()
+	void ActorDied(AActor* DeadActor);
 };

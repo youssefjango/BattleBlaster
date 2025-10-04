@@ -28,3 +28,19 @@ void ABattleBlasterGM::BeginPlay()
 		}
 	}
 }
+
+void ABattleBlasterGM::ActorDied(AActor* DeadActor)
+{
+	if (DeadActor == Tank) {
+
+	}
+	else {
+		if (ATowerTank* tower = Cast<ATowerTank>(DeadActor)) {
+			tower->Destroy();
+			
+			if (--TowerCount == 0) {
+				//Victory
+			}
+		}
+	}
+}

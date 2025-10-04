@@ -26,10 +26,17 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 
+	UPROPERTY(EditAnywhere)
+	float Damage = 25.0f;
+
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Proj;
 	
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* ProjMovementComp;
+	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 	
 };

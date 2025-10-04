@@ -18,9 +18,6 @@ void ATowerTank::Tick(float DeltaTime)
 	if (Tank && InFireRange()) {
 		RotateTurret(Tank->GetActorLocation());
 	}
-	else {
-		UE_LOG(LogTemp, Display, TEXT("Player Tank not set make sure to set it properly in GameMode"));
-	}
 }
 
 void ATowerTank::CheckFireCondition()
