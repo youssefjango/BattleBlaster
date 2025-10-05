@@ -33,7 +33,6 @@ void ABattleBlasterGM::BeginPlay()
 void ABattleBlasterGM::ActorDied(AActor* DeadActor)
 {
 	if (DeadActor == Tank) {
-		UE_LOG(LogTemp, Display, TEXT("Tank destroyed"));
 		Cast<APlayerTank>(Tank)->HandleDestruction();
 	}
 	else {

@@ -86,6 +86,7 @@ void APlayerTank::HandleDestruction() {
 	SetActorTickEnabled(false);
 	SetPlayerEnabled(false);
 	IsAlive = false;
+	
 }
 
 void APlayerTank::SetPlayerEnabled(bool Enabled)
@@ -98,6 +99,7 @@ void APlayerTank::SetPlayerEnabled(bool Enabled)
 		else {
 			DisableInput(PlayerController);
 		}
+		PlayerController->bShowMouseCursor = Enabled;
 
 
 	}
