@@ -5,6 +5,7 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "TowerTank.h"
+#include "PlayerTank.h"
 
 void ABattleBlasterGM::BeginPlay()
 {
@@ -32,11 +33,12 @@ void ABattleBlasterGM::BeginPlay()
 void ABattleBlasterGM::ActorDied(AActor* DeadActor)
 {
 	if (DeadActor == Tank) {
-
+		UE_LOG(LogTemp, Display, TEXT("Tank destroyed"));
+		Cast<APlayerTank>(Tank)->HandleDestruction();
 	}
 	else {
 		if (ATowerTank* tower = Cast<ATowerTank>(DeadActor)) {
-			tower->Destroy();
+			tower->HandleDestruction();
 			
 			if (--TowerCount == 0) {
 				//Victory

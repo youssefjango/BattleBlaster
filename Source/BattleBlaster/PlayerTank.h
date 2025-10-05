@@ -59,8 +59,10 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComp;
 
+	APlayerController* PlayerController;
 
 	void MoveInput(const FInputActionValue& Value);
 	void TurnInput(const FInputActionValue& Value);
-
+	void HandleDestruction();
+	void SetPlayerEnabled(bool Enabled);
 };

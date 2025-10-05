@@ -38,7 +38,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AProjectile> ProjectileClass;
 
+	bool IsAlive = true;
+
 	void RotateTurret(FVector lookAtTarget);
 
 	void Fire();
+
+	void HandleDestruction();
 };

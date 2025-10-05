@@ -43,3 +43,7 @@ void ABaseTank::Fire() {
 	}
 }
 
+void ABaseTank::HandleDestruction()
+{
+}
+
