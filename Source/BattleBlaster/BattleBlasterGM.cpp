@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TowerTank.h"
 #include "PlayerTank.h"
+#include "BattleBlasterGameInstance.h"
 
 void ABattleBlasterGM::BeginPlay()
 {
@@ -33,7 +34,6 @@ void ABattleBlasterGM::BeginPlay()
 void ABattleBlasterGM::ActorDied(AActor* DeadActor)
 {
 	bool IsGameOver = false;
-	bool IsVictory = false;
 
 	if (DeadActor == Tank) {
 		Cast<APlayerTank>(Tank)->HandleDestruction();
@@ -59,6 +59,11 @@ void ABattleBlasterGM::ActorDied(AActor* DeadActor)
 }
 
 void ABattleBlasterGM::onGameOverTimerTimeOut()
-{
-	UGameplayStatics::OpenLevel(GetWorld(), *UGameplayStatics::GetCurrentLevelName(GetWorld()));
+{	
+	if (UBattleBlasterGameInstance * BBGI = Cast<UBattleBlasterGameInstance>(GetGameInstance())) {
+		if (IsVictory) {
+			UE_LOG(LogTemp, Display, TEXT("VICTORY!"));
+		}
+		IsVictory ? BBGI->LoadNextLevel() : BBGI->RestartCurrentLevel();
+	}
 }

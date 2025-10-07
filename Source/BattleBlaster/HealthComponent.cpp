@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Kismet/GameplayStatics.h"
+
 #include "HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
+
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()

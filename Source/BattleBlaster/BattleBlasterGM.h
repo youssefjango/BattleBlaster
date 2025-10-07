@@ -24,6 +24,7 @@ public:
 	
 	ABaseTank* Tank;
 	int32 TowerCount;
+	bool IsVictory = false;
 
 
 	UFUNCTION()
