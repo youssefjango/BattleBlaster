@@ -17,7 +17,7 @@ void ABattleBlasterGM::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATowerTank::StaticClass(), TowerTanks);
 	TowerCount = TowerTanks.Num();
 	if (APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0)) {
-		Tank = Cast<ABaseTank>(PlayerPawn);
+		Tank = Cast<APlayerTank>(PlayerPawn);
 		if (!Tank) {
 			UE_LOG(LogTemp, Display, TEXT("GameMode: Failed registering palyer pawn as tank."));
 		}
@@ -29,6 +29,9 @@ void ABattleBlasterGM::BeginPlay()
 			}
 		}
 	}
+
+	CountDownSeconds = CountDownDelay;
+	GetWorldTimerManager().SetTimer(CountdownTimerHandle, this, &ABattleBlasterGM::OnCountDownTimerTimeOut, 1.0f, true);
 }
 
 void ABattleBlasterGM::ActorDied(AActor* DeadActor)
@@ -36,7 +39,7 @@ void ABattleBlasterGM::ActorDied(AActor* DeadActor)
 	bool IsGameOver = false;
 
 	if (DeadActor == Tank) {
-		Cast<APlayerTank>(Tank)->HandleDestruction();
+		Tank->HandleDestruction();
 		IsGameOver = true;
 	}
 	else {
@@ -66,4 +69,21 @@ void ABattleBlasterGM::onGameOverTimerTimeOut()
 		}
 		IsVictory ? BBGI->LoadNextLevel() : BBGI->RestartCurrentLevel();
 	}
+}
+
+void ABattleBlasterGM::OnCountDownTimerTimeOut()
+{
+	if (CountDownSeconds > 0) {
+		UE_LOG(LogTemp, Display, TEXT("CountDown: %d"), CountDownSeconds);
+	}
+	else if (CountDownSeconds == 0)
+	{
+		UE_LOG(LogTemp, Display, TEXT("GO!"));
+		Tank->SetPlayerEnabled(true);
+	}
+	else {
+		GetWorldTimerManager().ClearTimer(CountdownTimerHandle);
+	}
+	CountDownSeconds--;
+	
 }

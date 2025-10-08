@@ -32,6 +32,7 @@ void APlayerTank::BeginPlay()
 			}
 		}
 	}
+	SetPlayerEnabled(false);
 }
 
 // Called every frame

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseTank.h"
+#include "PlayerTank.h"
 #include "TowerTank.generated.h"
 
 /**
@@ -19,7 +20,7 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
-	ABaseTank* Tank;
+	APlayerTank* Tank;
 
 	UPROPERTY(EditAnywhere, Category = "Shooting")
 	float ShootingRange = 500.0f;

@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "BaseTank.h"
+#include "PlayerTank.h"
+
 
 #include "BattleBlasterGM.generated.h"
 
@@ -22,14 +24,22 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Game Over")
 	float GameOverDelay = 5.0f;
 	
-	ABaseTank* Tank;
+	APlayerTank* Tank;
 	int32 TowerCount;
 	bool IsVictory = false;
 
+	UPROPERTY(EditAnywhere)
+	int32 CountDownDelay = 5;
+
+	int32 CountDownSeconds;
+
+	FTimerHandle CountdownTimerHandle;
+	
 
 	UFUNCTION()
 	void ActorDied(AActor* DeadActor);
 
 	void onGameOverTimerTimeOut();
+	void OnCountDownTimerTimeOut();
 
 };
