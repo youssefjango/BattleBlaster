@@ -11,6 +11,7 @@
 #include "BaseTank.generated.h"
 
 
+
 UCLASS()
 class BATTLEBLASTER_API ABaseTank : public APawn
 {
@@ -40,6 +41,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UNiagaraSystem* Explosion;
+	UPROPERTY(EditAnywhere)
+	USoundBase* ExplosionSound;
+	
 
 
 	bool IsAlive = true;

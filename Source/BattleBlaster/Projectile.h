@@ -44,6 +44,12 @@ public:
 	UNiagaraComponent* TrailParticles;
 	UPROPERTY(EditAnywhere)
 	UNiagaraSystem* HitParticles;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* LaunchSound;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* HitSound;
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 

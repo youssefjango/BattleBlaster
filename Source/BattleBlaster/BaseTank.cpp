@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Kismet/GameplayStatics.h"
 #include "BaseTank.h"
+
 
 // Sets default values
 ABaseTank::ABaseTank()
@@ -47,6 +48,12 @@ void ABaseTank::HandleDestruction()
 {
 	if (Explosion) {
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Explosion, GetActorLocation(), GetActorRotation());
+		if (ExplosionSound) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), ExplosionSound, GetActorLocation());
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("No sound for Explosion assigned. aka [ExplosionSound] in BaseTank."));
+		}
 	}
 }
 

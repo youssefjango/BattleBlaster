@@ -24,6 +24,13 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	Proj->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+
+	if (LaunchSound) {
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), LaunchSound, GetActorLocation());
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("No sound for launch assigned. aka [LaunchSound] in Projectile"));
+	}
 }
 
 // Called every frame
@@ -42,6 +49,12 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 		if (HitParticles) {
 			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitParticles, GetActorLocation(), GetActorRotation());
 		}
+	}
+	if (LaunchSound) {
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, GetActorLocation());
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("No sound for hit assigned. aka [HitSound] in Projectile"));
 	}
 	
 	this->Destroy();
