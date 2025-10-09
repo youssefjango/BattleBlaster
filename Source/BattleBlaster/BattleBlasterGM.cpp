@@ -29,6 +29,13 @@ void ABattleBlasterGM::BeginPlay()
 			}
 		}
 	}
+	if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0)) {
+		MessageWidgetUI = CreateWidget<UScreenMessageUI>(PlayerController, ScreenMessageUI);
+		if (MessageWidgetUI) {
+			MessageWidgetUI->AddToPlayerScreen();
+			MessageWidgetUI->SetMessageUI("Get Ready!");
+		}
+	}
 
 	CountDownSeconds = CountDownDelay;
 	GetWorldTimerManager().SetTimer(CountdownTimerHandle, this, &ABattleBlasterGM::OnCountDownTimerTimeOut, 1.0f, true);
@@ -54,8 +61,10 @@ void ABattleBlasterGM::ActorDied(AActor* DeadActor)
 	}
 
 	if (IsGameOver) {
-		FString GameOverString = IsGameOver ? "Victory!" : "Defeat :(";
+		FString GameOverString = IsVictory ? "Victory!" : "Defeat :(";
 		
+		MessageWidgetUI->SetVisibility(ESlateVisibility::Visible);
+		MessageWidgetUI->SetMessageUI(GameOverString);
 		FTimerHandle GameOverTimerHandle;
 		GetWorldTimerManager().SetTimer(GameOverTimerHandle, this, &ABattleBlasterGM::onGameOverTimerTimeOut, GameOverDelay, false);
 	}
@@ -65,7 +74,7 @@ void ABattleBlasterGM::onGameOverTimerTimeOut()
 {	
 	if (UBattleBlasterGameInstance * BBGI = Cast<UBattleBlasterGameInstance>(GetGameInstance())) {
 		if (IsVictory) {
-			UE_LOG(LogTemp, Display, TEXT("VICTORY!"));
+			MessageWidgetUI->SetMessageUI("Victory!");
 		}
 		IsVictory ? BBGI->LoadNextLevel() : BBGI->RestartCurrentLevel();
 	}
@@ -74,15 +83,17 @@ void ABattleBlasterGM::onGameOverTimerTimeOut()
 void ABattleBlasterGM::OnCountDownTimerTimeOut()
 {
 	if (CountDownSeconds > 0) {
-		UE_LOG(LogTemp, Display, TEXT("CountDown: %d"), CountDownSeconds);
+		MessageWidgetUI->SetMessageUI(FString::FromInt(CountDownSeconds));
 	}
 	else if (CountDownSeconds == 0)
 	{
-		UE_LOG(LogTemp, Display, TEXT("GO!"));
+		MessageWidgetUI->SetMessageUI("GO!");
 		Tank->SetPlayerEnabled(true);
+
 	}
 	else {
 		GetWorldTimerManager().ClearTimer(CountdownTimerHandle);
+		MessageWidgetUI->SetVisibility(ESlateVisibility::Hidden);
 	}
 	CountDownSeconds--;
 	

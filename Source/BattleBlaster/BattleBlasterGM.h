@@ -6,7 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "BaseTank.h"
 #include "PlayerTank.h"
-
+#include "ScreenMessageUI.h"
 
 #include "BattleBlasterGM.generated.h"
 
@@ -22,6 +22,11 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere, Category = "Game Over")
+	TSubclassOf<UScreenMessageUI> ScreenMessageUI;
+	
+	UScreenMessageUI* MessageWidgetUI;
+	
+	UPROPERTY(EditAnywhere, Category = "Game Over")
 	float GameOverDelay = 5.0f;
 	
 	APlayerTank* Tank;
@@ -35,6 +40,8 @@ public:
 
 	FTimerHandle CountdownTimerHandle;
 	
+
+
 
 	UFUNCTION()
 	void ActorDied(AActor* DeadActor);

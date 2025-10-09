@@ -11,6 +11,11 @@ AProjectile::AProjectile()
 	Proj = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMesh"));
 	SetRootComponent(Proj);
 	ProjMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComp"));
+
+	TrailParticles = CreateDefaultSubobject<UNiagaraComponent>(TEXT("TrailParticles"));
+	TrailParticles->SetupAttachment(RootComponent);
+
+
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +38,10 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	AActor* OwnerOfProjectile = GetOwner();
 	if (OwnerOfProjectile && OtherActor && OtherActor != Owner && OtherActor != this) {
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerOfProjectile->GetInstigatorController(), this, UDamageType::StaticClass());
+
+		if (HitParticles) {
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitParticles, GetActorLocation(), GetActorRotation());
+		}
 	}
 	
 	this->Destroy();
