@@ -45,5 +45,8 @@ void ABaseTank::Fire() {
 
 void ABaseTank::HandleDestruction()
 {
+	if (Explosion) {
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Explosion, GetActorLocation(), GetActorRotation());
+	}
 }
 

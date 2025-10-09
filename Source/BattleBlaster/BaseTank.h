@@ -38,6 +38,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AProjectile> ProjectileClass;
 
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* Explosion;
+
+
 	bool IsAlive = true;
 
 	void RotateTurret(FVector lookAtTarget);
