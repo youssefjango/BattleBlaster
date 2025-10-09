@@ -57,6 +57,12 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 		UE_LOG(LogTemp, Warning, TEXT("No sound for hit assigned. aka [HitSound] in Projectile"));
 	}
 	
+	if (CamShake) {
+		if (APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) {
+			PC->ClientStartCameraShake(CamShake);
+		}
+	}
+
 	this->Destroy();
 }
 

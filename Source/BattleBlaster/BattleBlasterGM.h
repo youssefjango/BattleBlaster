@@ -39,7 +39,9 @@ public:
 	int32 CountDownSeconds;
 
 	FTimerHandle CountdownTimerHandle;
-	
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UCameraShakeBase> DeathShake;
 
 
 

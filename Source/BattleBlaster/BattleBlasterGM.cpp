@@ -47,6 +47,9 @@ void ABattleBlasterGM::ActorDied(AActor* DeadActor)
 
 	if (DeadActor == Tank) {
 		Tank->HandleDestruction();
+		if (APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) {
+			PC->ClientStartCameraShake(DeathShake);
+		}
 		IsGameOver = true;
 	}
 	else {
