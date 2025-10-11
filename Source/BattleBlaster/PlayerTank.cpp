@@ -12,7 +12,10 @@ APlayerTank::APlayerTank()
 {
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	
+	LL = CreateDefaultSubobject<USpotLightComponent>(TEXT("LeftLightSpot"));
+	LL->SetupAttachment(TurretMesh);
+	LR = CreateDefaultSubobject<USpotLightComponent>(TEXT("RightLightSpot"));
+	LR->SetupAttachment(TurretMesh);
 	SpringArm->SetupAttachment(RootComponent);
 	CameraComp->SetupAttachment(SpringArm);
 }
@@ -56,10 +59,33 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerTank::MoveInput);
 		EnhancedInputComponent->BindAction(TurnAction, ETriggerEvent::Triggered, this, &APlayerTank::TurnInput);
+		EnhancedInputComponent->BindAction(LightAction, ETriggerEvent::Started, this, &APlayerTank::LightInput);
+		EnhancedInputComponent->BindAction(LightIntensityAction, ETriggerEvent::Triggered, this, &APlayerTank::IntensityLightInput);
 		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &ABaseTank::Fire);
 	}
 }
 
+void APlayerTank::IntensityLightInput(const FInputActionValue& Value)
+{
+	float InValue = Value.Get<float>();
+	if (IsInvalidRequest(InValue)) {
+		return;
+	}
+	LR->SetIntensity(LR->Intensity + InValue * 20);
+	LL->SetIntensity(LL->Intensity + InValue * 20);
+	
+
+	
+}
+
+
+void APlayerTank::LightInput(const FInputActionValue& Value)
+{
+	bool InValue = Value.Get<bool>();
+
+	LR->ToggleVisibility();
+	LL->ToggleVisibility();
+}
 void APlayerTank::MoveInput(const FInputActionValue& Value)
 {
 	float InValue = Value.Get<float>();
@@ -104,5 +130,10 @@ void APlayerTank::SetPlayerEnabled(bool Enabled)
 
 
 	}
+}
+
+bool APlayerTank::IsInvalidRequest(float InValue)
+{
+	return (InValue > 0 && (LR->Intensity > 500.0f || LL->Intensity > 500.0f)) || (InValue < 0 && (LR->Intensity <= 0.0f || LL->Intensity <= 0.0f));
 }
 

@@ -9,7 +9,7 @@
 #include "InputAction.h"
 #include "InputActionValue.h"
 #include "EnhancedInputComponent.h"
-
+#include "Components/SpotLightComponent.h"
 
 
 #include "PlayerTank.generated.h"
@@ -47,6 +47,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	class UInputAction* FireAction;
 	
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* LightAction;
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* LightIntensityAction;
+
+	
 	UPROPERTY(EditAnywhere, Category = "Motion")
 	float Speed = 300.0f;
 	UPROPERTY(EditAnywhere, Category = "Motion")
@@ -59,10 +65,19 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComp;
 
+	UPROPERTY(VisibleAnywhere)
+	USpotLightComponent* LR;
+	UPROPERTY(VisibleAnywhere)
+	USpotLightComponent* LL;
+
 	APlayerController* PlayerController;
 
 	void MoveInput(const FInputActionValue& Value);
 	void TurnInput(const FInputActionValue& Value);
+	void LightInput(const FInputActionValue& Value);
+	void IntensityLightInput(const FInputActionValue& Value);
 	void HandleDestruction();
 	void SetPlayerEnabled(bool Enabled);
+private:
+	bool IsInvalidRequest(float InValue);
 };
