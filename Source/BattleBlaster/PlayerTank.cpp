@@ -18,6 +18,8 @@ APlayerTank::APlayerTank()
 	LR->SetupAttachment(TurretMesh);
 	SpringArm->SetupAttachment(RootComponent);
 	CameraComp->SetupAttachment(SpringArm);
+	TrailParticles = CreateDefaultSubobject<UNiagaraComponent>(TEXT("TrailTank"));
+	TrailParticles->SetupAttachment(RootComponent);
 }
 
 void APlayerTank::BeginPlay()
@@ -58,6 +60,7 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerTank::MoveInput);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &APlayerTank::MoveInput);
 		EnhancedInputComponent->BindAction(TurnAction, ETriggerEvent::Triggered, this, &APlayerTank::TurnInput);
 		EnhancedInputComponent->BindAction(LightAction, ETriggerEvent::Started, this, &APlayerTank::LightInput);
 		EnhancedInputComponent->BindAction(LightIntensityAction, ETriggerEvent::Triggered, this, &APlayerTank::IntensityLightInput);
@@ -85,15 +88,22 @@ void APlayerTank::LightInput(const FInputActionValue& Value)
 
 	LR->ToggleVisibility();
 	LL->ToggleVisibility();
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), LightBlinkSound, GetActorLocation());
 }
 void APlayerTank::MoveInput(const FInputActionValue& Value)
 {
 	float InValue = Value.Get<float>();
+	if (InValue == 0) { //when button is realised
+		TrailParticles->Deactivate();
+		return;
+	}
+
 
 	FVector DeltaLoc = FVector(Speed * InValue * UGameplayStatics::GetWorldDeltaSeconds(this)
 		, 0.0f, 0.0f);
 
-	AddActorLocalOffset(DeltaLoc);
+	AddActorLocalOffset(DeltaLoc, true);
+	TrailParticles->Activate();
 }
 void APlayerTank::TurnInput(const FInputActionValue& Value)
 {

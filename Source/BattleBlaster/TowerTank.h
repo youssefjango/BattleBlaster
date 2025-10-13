@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseTank.h"
 #include "PlayerTank.h"
+#include "Components/SpotLightComponent.h"
 #include "TowerTank.generated.h"
 
 /**
@@ -19,6 +20,8 @@ protected:
 	virtual void BeginPlay() override;
 public:
 	virtual void Tick(float DeltaTime) override;
+	ATowerTank();
+
 
 	APlayerTank* Tank;
 
@@ -26,6 +29,9 @@ public:
 	float ShootingRange = 500.0f;
 	UPROPERTY(EditAnywhere, Category = "Shooting")
 	float FireRate = 2.0f;
+
+	UPROPERTY(VisibleAnywhere)
+	USpotLightComponent* LightTurret;
 
 	void CheckFireCondition();
 

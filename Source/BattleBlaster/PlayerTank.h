@@ -69,6 +69,11 @@ public:
 	USpotLightComponent* LR;
 	UPROPERTY(VisibleAnywhere)
 	USpotLightComponent* LL;
+	UPROPERTY(EditAnywhere)
+	USoundBase* LightBlinkSound;
+	UPROPERTY(VisibleAnywhere)
+	UNiagaraComponent* TrailParticles;
+
 
 	APlayerController* PlayerController;
 

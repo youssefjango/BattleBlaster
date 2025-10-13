@@ -11,7 +11,9 @@
 void ABattleBlasterGM::BeginPlay()
 {
 	Super::BeginPlay();
-
+	if (UGameplayStatics::GetCurrentLevelName(GetWorld()).Equals("Level_0")) {
+		return;
+	}
 	TArray<AActor*> TowerTanks;
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATowerTank::StaticClass(), TowerTanks);

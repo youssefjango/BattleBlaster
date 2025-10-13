@@ -3,7 +3,10 @@
 
 #include "TowerTank.h"
 #include "PlayerTank.h"
-
+ATowerTank::ATowerTank() {
+	LightTurret = CreateDefaultSubobject<USpotLightComponent>(TEXT("LightTurret"));
+	LightTurret->SetupAttachment(TurretMesh);
+}
 void ATowerTank::BeginPlay()
 {
 	Super::BeginPlay();
