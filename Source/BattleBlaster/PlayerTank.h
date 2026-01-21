@@ -58,6 +58,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Motion")
 	float RotationRate = 50.0f;
 	
+	UPROPERTY(EditAnywhere, Category = "Light")
+	float DeltaLight = 20.0f;
 
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
@@ -65,11 +67,11 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComp;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Light")
 	USpotLightComponent* LR;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Light")
 	USpotLightComponent* LL;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Light")
 	USoundBase* LightBlinkSound;
 	UPROPERTY(VisibleAnywhere)
 	UNiagaraComponent* TrailParticles;

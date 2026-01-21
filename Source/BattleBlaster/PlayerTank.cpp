@@ -74,8 +74,8 @@ void APlayerTank::IntensityLightInput(const FInputActionValue& Value)
 	if (IsInvalidRequest(InValue)) {
 		return;
 	}
-	LR->SetIntensity(LR->Intensity + InValue * 20);
-	LL->SetIntensity(LL->Intensity + InValue * 20);
+	LR->SetIntensity(LR->Intensity + InValue * DeltaLight);
+	LL->SetIntensity(LL->Intensity + InValue * DeltaLight);
 	
 
 	
